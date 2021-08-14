@@ -650,10 +650,11 @@ public class Main extends JavaPlugin implements Listener {
 											playersOnline.append(((Player) oo[oo.length-1]).getDisplayName());
 										}
 
+										String worldName = wo.getWorld().getName();
+										worldName = worldName.substring(0,1).toUpperCase() + worldName.substring(1).toLowerCase();
+
 										e.getPlayer().sendMessage(
-												ChatColor.GOLD + "Teleporting to " + (wo.getWorld().getName()));
-										e.getPlayer().sendMessage(
-												ChatColor.GRAY + "Players: " + playersOnline.toString());
+												ChatColor.GOLD + "Welcome to " + (worldName) + "!\n" + ChatColor.GRAY + "Players: " + playersOnline.toString());
 
 										event.setCancelled(true);
 
@@ -987,8 +988,7 @@ public class Main extends JavaPlugin implements Listener {
 			try {
 				ender.setItem(itemIndex,
 						(ItemStack) config.get(p.getUniqueId() + "." + world2 + ".enderchest." + itemIndex));
-			} catch (Error | Exception e4) {
-			}
+			} catch (Error | Exception e4) {}
 		return ender;
 	}
 

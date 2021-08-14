@@ -67,8 +67,6 @@ public class Main extends JavaPlugin implements Listener {
 
 	private boolean enableTeleportToSpawnIfSameWorld = true;
 
-	private String enderchest_title = "Ender Chest";
-
 	public static String getPrefix() {
 		return prefix;
 	}
@@ -299,12 +297,14 @@ public class Main extends JavaPlugin implements Listener {
 			LobbyAPI.openGUI(e.getPlayer());
 
 		if (enableCustomEnderchests) {
-			LobbyWorld lw = LobbyAPI.getLobbyWorld(e.getPlayer().getWorld());
+			Player p = (Player) e.getPlayer();
+			LobbyWorld lw = LobbyAPI.getLobbyWorld(p.getWorld());
 			if (lw != null) {
 				if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENDER_CHEST) {
-					if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !e.getPlayer().isSneaking() && !e.getClickedBlock().getRelative(BlockFace.UP).getType().isSolid()) {
+					if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !p.isSneaking() && !e.getClickedBlock().getRelative(BlockFace.UP).getType().isSolid()) {
 						e.setCancelled(true);
-						e.getPlayer().openInventory(getEnderChest(e.getPlayer(), e.getPlayer().getWorld()));
+						p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
+						p.openInventory(getEnderChest(p, p.getWorld()));
 					}
 				}
 			}
@@ -314,10 +314,12 @@ public class Main extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onClose(InventoryCloseEvent e) {
 		if (enableCustomEnderchests) {
-			LobbyWorld lw = LobbyAPI.getLobbyWorld(e.getPlayer().getWorld());
+			Player p = (Player) e.getPlayer();
+			LobbyWorld lw = LobbyAPI.getLobbyWorld(p.getWorld());
 			if (lw != null) {
-				if (e.getView().getTitle().equals(enderchest_title)) {
-					saveEnderChest((Player) e.getPlayer(), e.getInventory(), e.getPlayer().getWorld());
+				if (e.getView().getType().equals(InventoryType.ENDER_CHEST)) {
+					saveEnderChest(p.getPlayer(), e.getInventory(), e.getPlayer().getWorld());
+					p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_CLOSE, 1F, 1F);
 				}
 			}
 		}
@@ -995,7 +997,7 @@ public class Main extends JavaPlugin implements Listener {
 				e1.printStackTrace();
 			}
 		FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-		Inventory ender = Bukkit.createInventory(null, p.getEnderChest().getSize(), enderchest_title);
+		Inventory ender = Bukkit.createInventory(null, InventoryType.ENDER_CHEST);
 
 		for (int itemIndex = 0; itemIndex < p.getEnderChest().getSize(); itemIndex++)
 			try {

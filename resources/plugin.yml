@@ -1,6 +1,6 @@
 main: me.zombie_striker.lobbyapi.Main
 version: ${project.version}
-api-version: 1.13
+api-version: 1.17
 name: LobbyAPI
 commands:
   Lobby:
@@ -20,7 +20,7 @@ permissions:
     description: Gives access that only a user should have, which is to access the hub command
     children:
       lobbyapi.hub: true
+depend: [PluginConstructorAPI]
 softdepend: [MultiverseCore]
 load: POSTWORLD
-author:
-  Zombie_Striker
+authors: [Zombie_Striker, dmblc]

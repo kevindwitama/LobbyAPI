@@ -678,6 +678,7 @@ public class Main extends JavaPlugin implements Listener {
 						}
 					event.setCancelled(true);
 				}
+				event.setCancelled(true);
 			}
 		}
 	}

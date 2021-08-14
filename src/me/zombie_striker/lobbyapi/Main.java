@@ -725,18 +725,19 @@ public class Main extends JavaPlugin implements Listener {
 			Bukkit.getConsoleSender().sendMessage(prefix + "Inventory is null");
 			return;
 		}
+		String playerUuid = p.getUniqueId().toString();
 		String s = lw.getInventorySaveName();
 		File tempHolder = new File(getDataFolder() + File.separator + "playerfiles",
-				p.getUniqueId().toString() + ".yml");
+				playerUuid + ".yml");
 		FileConfiguration config = getConfig();
 		if (tempHolder.exists())
 			config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-		if (!config.contains(p.getUniqueId() + "." + s))
+		if (!config.contains(playerUuid + "." + s))
 			return;
-		if (config.contains(p.getUniqueId() + "." + s + ".i")) {
+		if (config.contains(playerUuid + "." + s + ".i")) {
 			for (int i = 0; i < p.getInventory().getSize(); i++) {
-				if (config.contains(p.getUniqueId() + "." + s + ".i." + i)) {
-					Object item = config.get(p.getUniqueId() + "." + s + ".i." + i);
+				if (config.contains(playerUuid + "." + s + ".i." + i)) {
+					Object item = config.get(playerUuid + "." + s + ".i." + i);
 					;
 					if (item instanceof ItemStack) {
 						ItemStack temp = (ItemStack) item;
@@ -760,65 +761,65 @@ public class Main extends JavaPlugin implements Listener {
 				}
 			}
 		}
-		p.getInventory().setBoots((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 1));
-		p.getInventory().setLeggings((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 2));
-		p.getInventory().setChestplate((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 3));
-		p.getInventory().setHelmet((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 4));
+		p.getInventory().setBoots((ItemStack) config.get(playerUuid + "." + s + ".a." + 1));
+		p.getInventory().setLeggings((ItemStack) config.get(playerUuid + "." + s + ".a." + 2));
+		p.getInventory().setChestplate((ItemStack) config.get(playerUuid + "." + s + ".a." + 3));
+		p.getInventory().setHelmet((ItemStack) config.get(playerUuid + "." + s + ".a." + 4));
 
 		try {
-			if (config.contains(p.getUniqueId() + "." + s + ".i.offhand"))
-				p.getInventory().setItemInOffHand(config.getItemStack(p.getUniqueId() + "." + s + ".i.offhand"));
+			if (config.contains(playerUuid + "." + s + ".i.offhand"))
+				p.getInventory().setItemInOffHand(config.getItemStack(playerUuid + "." + s + ".i.offhand"));
 		} catch (Error | Exception e2) {
 		}
 
-		if (config.contains(p.getUniqueId() + "." + s + ".xpl"))
-			p.setLevel((int) config.get(p.getUniqueId() + "." + s + ".xpl"));
-		if (config.contains(p.getUniqueId() + "." + s + ".xp"))
-			p.setExp((float) (double) config.get(p.getUniqueId() + "." + s + ".xp"));
-		if (config.contains(p.getUniqueId() + "." + s + ".hunger"))
-			p.setFoodLevel((int) config.get(p.getUniqueId() + "." + s + ".hunger"));
+		if (config.contains(playerUuid + "." + s + ".xpl"))
+			p.setLevel((int) config.get(playerUuid + "." + s + ".xpl"));
+		if (config.contains(playerUuid + "." + s + ".xp"))
+			p.setExp((float) (double) config.get(playerUuid + "." + s + ".xp"));
+		if (config.contains(playerUuid + "." + s + ".hunger"))
+			p.setFoodLevel((int) config.get(playerUuid + "." + s + ".hunger"));
 
-		if (config.contains(p.getUniqueId() + "." + s + ".potions_effects")) {
-			for (String effect : config.getConfigurationSection(p.getUniqueId() + "." + s + ".potions_effects").getKeys(false)) {
+		if (config.contains(playerUuid + "." + s + ".potions_effects")) {
+			for (String effect : config.getConfigurationSection(playerUuid + "." + s + ".potions_effects").getKeys(false)) {
 				PotionEffectType type = PotionEffectType.getByName(effect);
-				int duration = config.getInt(p.getUniqueId() + "." + s + ".potions_effects." + effect + ".dur");
-				int amplifier = config.getInt(p.getUniqueId() + "." + s + ".potions_effects." + effect + ".amp");
+				int duration = config.getInt(playerUuid + "." + s + ".potions_effects." + effect + ".dur");
+				int amplifier = config.getInt(playerUuid + "." + s + ".potions_effects." + effect + ".amp");
 				p.addPotionEffect(new PotionEffect(type, duration, amplifier));
 			}
 		}
 
-		if (config.contains(p.getUniqueId() + "." + s + ".allowflight"))
-			p.setAllowFlight(config.getBoolean(p.getUniqueId() + "." + s + ".allowflight"));
-		if (config.contains(p.getUniqueId() + "." + s + ".compasslocation"))
-			p.setCompassTarget((Location) config.get(p.getUniqueId() + "." + s + ".compasslocation"));
-		if (config.contains(p.getUniqueId() + "." + s + ".fireticks"))
-			p.setFireTicks(config.getInt(p.getUniqueId() + "." + s + ".fireticks"));
+		if (config.contains(playerUuid + "." + s + ".allowflight"))
+			p.setAllowFlight(config.getBoolean(playerUuid + "." + s + ".allowflight"));
+		if (config.contains(playerUuid + "." + s + ".compasslocation"))
+			p.setCompassTarget((Location) config.get(playerUuid + "." + s + ".compasslocation"));
+		if (config.contains(playerUuid + "." + s + ".fireticks"))
+			p.setFireTicks(config.getInt(playerUuid + "." + s + ".fireticks"));
 		try {
-			if (config.contains(p.getUniqueId() + "." + s + ".bedspawn"))
-				p.setBedSpawnLocation((Location) config.get(p.getUniqueId() + "." + s + ".bedspawn"), true);
+			if (config.contains(playerUuid + "." + s + ".bedspawn"))
+				p.setBedSpawnLocation((Location) config.get(playerUuid + "." + s + ".bedspawn"), true);
 		} catch (Error | Exception e45) {
 		}
-		if (config.contains(p.getUniqueId() + "." + s + ".saturation"))
-			p.setSaturation((float) (double) config.get(p.getUniqueId() + "." + s + ".saturation"));
-		if (config.contains(p.getUniqueId() + "." + s + ".exhaustion"))
-			p.setExhaustion((float) (double) config.get(p.getUniqueId() + "." + s + ".exhaustion"));
-		if (config.contains(p.getUniqueId() + "." + s + ".air"))
-			p.setRemainingAir(config.getInt(p.getUniqueId() + "." + s + ".air"));
+		if (config.contains(playerUuid + "." + s + ".saturation"))
+			p.setSaturation((float) (double) config.get(playerUuid + "." + s + ".saturation"));
+		if (config.contains(playerUuid + "." + s + ".exhaustion"))
+			p.setExhaustion((float) (double) config.get(playerUuid + "." + s + ".exhaustion"));
+		if (config.contains(playerUuid + "." + s + ".air"))
+			p.setRemainingAir(config.getInt(playerUuid + "." + s + ".air"));
 
 
-		if (config.contains(p.getUniqueId() + "." + s + ".advancements")) {
+		if (config.contains(playerUuid + "." + s + ".advancements")) {
 			try {
 				Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
 				for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
 					if (a.getKey().getKey().startsWith("recipes"))
 						continue;
-					if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
+					if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : new ArrayList<>(progress.getRemainingCriteria())) {
 							progress.awardCriteria(adv);
 						}
-					} else if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
-						Collection<String> awarded = config.getStringList(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
+					} else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
+						Collection<String> awarded = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : a.getCriteria()) {
 							if (awarded.contains(adv)) {
@@ -829,8 +830,8 @@ public class Main extends JavaPlugin implements Listener {
 									progress.revokeCriteria(adv);
 							}
 						}
-					} else if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
-						Collection<String> remaining = config.getStringList(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
+					} else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
+						Collection<String> remaining = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : a.getCriteria()) {
 							if (!remaining.contains(adv)) {
@@ -931,13 +932,13 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	private void saveEnderChest(Player p, Inventory chest, World w) {
-
 		LobbyWorld lw = LobbyAPI.getLobbyWorld(w.getName());
 		if (lw == null) {
 			p.sendMessage(prefix
 					+ " The world you are in is not registered by LobbyAPI. Contact the server owner or OP and show them this message.");
 			return;
 		}
+		String playerUuid = p.getUniqueId().toString();
 		String world2 = lw.getInventorySaveName();
 		File tempHolder = new File(getDataFolder() + File.separator + "playerfiles",
 				p.getUniqueId().toString() + ".yml");
@@ -951,9 +952,9 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
 
-		config.set(p.getUniqueId() + "." + world2 + ".enderchest", null);
+		config.set(playerUuid + "." + world2 + ".enderchest", null);
 		for (int itemIndex = 0; itemIndex < chest.getSize(); itemIndex++)
-			config.set(p.getUniqueId() + "." + world2 + ".enderchest." + itemIndex, chest.getContents()[itemIndex]);
+			config.set(playerUuid + "." + world2 + ".enderchest." + itemIndex, chest.getContents()[itemIndex]);
 		try {
 			config.save(tempHolder);
 		} catch (IOException e) {
@@ -1009,9 +1010,10 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	private void saveInventory(Player p, LobbyWorld lw) {
+		String playerUuid = p.getUniqueId().toString();
 		String world2 = lw.getInventorySaveName();
 		File tempHolder = new File(getDataFolder() + File.separator + "playerfiles",
-				p.getUniqueId().toString() + ".yml");
+				playerUuid + ".yml");
 		if (!tempHolder.getParentFile().exists())
 			tempHolder.getParentFile().mkdirs();
 		if (!tempHolder.exists())
@@ -1021,29 +1023,29 @@ public class Main extends JavaPlugin implements Listener {
 				e1.printStackTrace();
 			}
 		FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-		config.set(p.getUniqueId() + "." + world2 + ".xp", p.getExp());
-		config.set(p.getUniqueId() + "." + world2 + ".xpl", p.getLevel());
-		config.set(p.getUniqueId() + "." + world2 + ".health", p.getHealth());
-		config.set(p.getUniqueId() + "." + world2 + ".hunger", p.getFoodLevel());
-		config.set(p.getUniqueId() + "." + world2 + ".allowflight", p.getAllowFlight());
-		config.set(p.getUniqueId() + "." + world2 + ".compasslocation", p.getCompassTarget());
-		config.set(p.getUniqueId() + "." + world2 + ".fireticks", p.getFireTicks());
+		config.set(playerUuid + "." + world2 + ".xp", p.getExp());
+		config.set(playerUuid + "." + world2 + ".xpl", p.getLevel());
+		config.set(playerUuid + "." + world2 + ".health", p.getHealth());
+		config.set(playerUuid + "." + world2 + ".hunger", p.getFoodLevel());
+		config.set(playerUuid + "." + world2 + ".allowflight", p.getAllowFlight());
+		config.set(playerUuid + "." + world2 + ".compasslocation", p.getCompassTarget());
+		config.set(playerUuid + "." + world2 + ".fireticks", p.getFireTicks());
 		try {
 			try {
-				config.set(p.getUniqueId() + "." + world2 + ".bedspawn", p.getBedSpawnLocation());
+				config.set(playerUuid + "." + world2 + ".bedspawn", p.getBedSpawnLocation());
 			} catch (Error | Exception e4) {
 			}
-			config.set(p.getUniqueId() + "." + world2 + ".exhaustion", p.getExhaustion());
-			config.set(p.getUniqueId() + "." + world2 + ".saturation", p.getSaturation());
-			config.set(p.getUniqueId() + "." + world2 + ".air", p.getRemainingAir());
+			config.set(playerUuid + "." + world2 + ".exhaustion", p.getExhaustion());
+			config.set(playerUuid + "." + world2 + ".saturation", p.getSaturation());
+			config.set(playerUuid + "." + world2 + ".air", p.getRemainingAir());
 		} catch (Error | Exception e4) {
 		}
 		ItemStack[] is = p.getInventory().getContents();
-		config.set(p.getUniqueId() + "." + world2 + ".i", null);
+		config.set(playerUuid + "." + world2 + ".i", null);
 		for (int itemIndex = 0; itemIndex < 36; itemIndex++) {
 			if (is[itemIndex] != null) {
 				if (is[itemIndex].hasItemMeta()) {
-					config.set(p.getUniqueId() + "." + world2 + ".i." + itemIndex, is[itemIndex]);
+					config.set(playerUuid + "." + world2 + ".i." + itemIndex, is[itemIndex]);
 				} else {
 					String saveStuff = "";
 					saveStuff += (is[itemIndex].getType().name());
@@ -1052,7 +1054,7 @@ public class Main extends JavaPlugin implements Listener {
 					} else if (is[itemIndex].getAmount() > 1) {
 						saveStuff += ("," + is[itemIndex].getAmount());
 					}
-					config.set(p.getUniqueId() + "." + world2 + ".i." + itemIndex, saveStuff);
+					config.set(playerUuid + "." + world2 + ".i." + itemIndex, saveStuff);
 				}
 			}
 		}
@@ -1060,26 +1062,26 @@ public class Main extends JavaPlugin implements Listener {
 		try {
 			if (p.getInventory().getItemInOffHand() == null
 					|| p.getInventory().getItemInOffHand().getType() == Material.AIR) {
-				config.set(p.getUniqueId() + "." + world2 + ".i.offhand", null);
+				config.set(playerUuid + "." + world2 + ".i.offhand", null);
 			} else {
-				config.set(p.getUniqueId() + "." + world2 + ".i.offhand", p.getInventory().getItemInOffHand());
+				config.set(playerUuid + "." + world2 + ".i.offhand", p.getInventory().getItemInOffHand());
 			}
 		} catch (Error | Exception e2) {
 		}
 
-		config.set(p.getUniqueId() + "." + world2 + ".a." + 1, p.getInventory().getBoots());
-		config.set(p.getUniqueId() + "." + world2 + ".a." + 2, p.getInventory().getLeggings());
-		config.set(p.getUniqueId() + "." + world2 + ".a." + 3, p.getInventory().getChestplate());
-		config.set(p.getUniqueId() + "." + world2 + ".a." + 4, p.getInventory().getHelmet());
+		config.set(playerUuid + "." + world2 + ".a." + 1, p.getInventory().getBoots());
+		config.set(playerUuid + "." + world2 + ".a." + 2, p.getInventory().getLeggings());
+		config.set(playerUuid + "." + world2 + ".a." + 3, p.getInventory().getChestplate());
+		config.set(playerUuid + "." + world2 + ".a." + 4, p.getInventory().getHelmet());
 
-		config.set(p.getUniqueId() + "." + world2 + ".potions_effects", null);
+		config.set(playerUuid + "." + world2 + ".potions_effects", null);
 		for (PotionEffect eff : p.getActivePotionEffects()) {
-			config.set(p.getUniqueId() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".dur", eff.getDuration());
-			config.set(p.getUniqueId() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".amo", eff.getAmplifier());
+			config.set(playerUuid + "." + world2 + ".potions_effects." + eff.getType().getName() + ".dur", eff.getDuration());
+			config.set(playerUuid + "." + world2 + ".potions_effects." + eff.getType().getName() + ".amo", eff.getAmplifier());
 		}
 
 		try {
-			config.set(p.getUniqueId() + "." + world2 + ".advancements", null);
+			config.set(playerUuid + "." + world2 + ".advancements", null);
 			Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
 			for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
 				if (a.getKey().getKey().startsWith("recipes"))
@@ -1087,13 +1089,13 @@ public class Main extends JavaPlugin implements Listener {
 				org.bukkit.advancement.AdvancementProgress pro = p.getAdvancementProgress(a);
 
 				if (pro.getRemainingCriteria().size() <= 0) {
-					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
+					config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
 				} else if (pro.getAwardedCriteria().size() <= 0) {
 					//Do not save if player has no reward crit
 				} else if (pro.getRemainingCriteria().size() > pro.getAwardedCriteria().size()) {
-					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
+					config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
 				} else {
-					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
+					config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
 				}
 			}
 		} catch (Error | Exception e4) {

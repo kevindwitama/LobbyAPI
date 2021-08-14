@@ -303,7 +303,7 @@ public class Main extends JavaPlugin implements Listener {
 				if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.ENDER_CHEST) {
 					if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !p.isSneaking() && !e.getClickedBlock().getRelative(BlockFace.UP).getType().isSolid()) {
 						e.setCancelled(true);
-						p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
+						p.playSound(e.getClickedBlock().getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1F, 1F);
 						p.openInventory(getEnderChest(p, p.getWorld()));
 					}
 				}

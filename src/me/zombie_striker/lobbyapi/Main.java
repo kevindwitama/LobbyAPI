@@ -808,66 +808,66 @@ public class Main extends JavaPlugin implements Listener {
             p.setRemainingAir(config.getInt(playerUuid + "." + s + ".air"));
 
 
-        if (config.contains(playerUuid + "." + s + ".advancements")) {
-            try {
-                Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
-                for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
-                    if (a.getKey().getKey().startsWith("recipes"))
-                        continue;
-                    if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
-                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
-                        for (String adv : new ArrayList<>(progress.getRemainingCriteria())) {
-                            progress.awardCriteria(adv);
-                        }
-                    } else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
-                        Collection<String> awarded = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
-                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
-                        for (String adv : a.getCriteria()) {
-                            if (awarded.contains(adv)) {
-                                if (!progress.getAwardedCriteria().contains(adv))
-                                    progress.awardCriteria(adv);
-                            } else {
-                                if (progress.getAwardedCriteria().contains(adv))
-                                    progress.revokeCriteria(adv);
-                            }
-                        }
-                    } else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
-                        Collection<String> remaining = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
-                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
-                        for (String adv : a.getCriteria()) {
-                            if (!remaining.contains(adv)) {
-                                if (!progress.getAwardedCriteria().contains(adv))
-                                    progress.awardCriteria(adv);
-                            } else {
-                                if (progress.getAwardedCriteria().contains(adv))
-                                    progress.revokeCriteria(adv);
-                            }
-                        }
-                    } else {
-                        //Is not in config. Player was not rewarded
-                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
-                        for (String adv : new ArrayList<>(progress.getAwardedCriteria())) {
-                            progress.revokeCriteria(adv);
-                        }
-                    }
-                }
-            } catch (Error | Exception e4) {
-            }
-        } else {
-            try {
-                Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
-                for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
-                    if (a.getKey().getKey().startsWith("recipes"))
-                        continue;
-                    //Is not in config. Player was not rewarded
-                    org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
-                    for (String adv : new ArrayList<>(progress.getAwardedCriteria())) {
-                        progress.revokeCriteria(adv);
-                    }
-                }
-            } catch (Error | Exception e4) {
-            }
-        }
+//        if (config.contains(playerUuid + "." + s + ".advancements")) {
+//            try {
+//                Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
+//                for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
+//                    if (a.getKey().getKey().startsWith("recipes"))
+//                        continue;
+//                    if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
+//                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
+//                        for (String adv : new ArrayList<>(progress.getRemainingCriteria())) {
+//                            progress.awardCriteria(adv);
+//                        }
+//                    } else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
+//                        Collection<String> awarded = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
+//                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
+//                        for (String adv : a.getCriteria()) {
+//                            if (awarded.contains(adv)) {
+//                                if (!progress.getAwardedCriteria().contains(adv))
+//                                    progress.awardCriteria(adv);
+//                            } else {
+//                                if (progress.getAwardedCriteria().contains(adv))
+//                                    progress.revokeCriteria(adv);
+//                            }
+//                        }
+//                    } else if (config.contains(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
+//                        Collection<String> remaining = config.getStringList(playerUuid + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
+//                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
+//                        for (String adv : a.getCriteria()) {
+//                            if (!remaining.contains(adv)) {
+//                                if (!progress.getAwardedCriteria().contains(adv))
+//                                    progress.awardCriteria(adv);
+//                            } else {
+//                                if (progress.getAwardedCriteria().contains(adv))
+//                                    progress.revokeCriteria(adv);
+//                            }
+//                        }
+//                    } else {
+//                        //Is not in config. Player was not rewarded
+//                        org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
+//                        for (String adv : new ArrayList<>(progress.getAwardedCriteria())) {
+//                            progress.revokeCriteria(adv);
+//                        }
+//                    }
+//                }
+//            } catch (Error | Exception e4) {
+//            }
+//        } else {
+//            try {
+//                Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
+//                for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
+//                    if (a.getKey().getKey().startsWith("recipes"))
+//                        continue;
+//                    //Is not in config. Player was not rewarded
+//                    org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
+//                    for (String adv : new ArrayList<>(progress.getAwardedCriteria())) {
+//                        progress.revokeCriteria(adv);
+//                    }
+//                }
+//            } catch (Error | Exception e4) {
+//            }
+//        }
     }
 
     protected Location getLastLocationForWorld(Player p, LobbyWorld lw) {
@@ -1081,26 +1081,26 @@ public class Main extends JavaPlugin implements Listener {
             config.set(playerUuid + "." + world2 + ".potions_effects." + eff.getType().getName() + ".amo", eff.getAmplifier());
         }
 
-        try {
-            config.set(playerUuid + "." + world2 + ".advancements", null);
-            Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
-            for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
-                if (a.getKey().getKey().startsWith("recipes"))
-                    continue;
-                org.bukkit.advancement.AdvancementProgress pro = p.getAdvancementProgress(a);
-
-                if (pro.getRemainingCriteria().size() <= 0) {
-                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
-                } else if (pro.getAwardedCriteria().size() <= 0) {
-                    //Do not save if player has no reward crit
-                } else if (pro.getRemainingCriteria().size() > pro.getAwardedCriteria().size()) {
-                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
-                } else {
-                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
-                }
-            }
-        } catch (Error | Exception e4) {
-        }
+//        try {
+//            config.set(playerUuid + "." + world2 + ".advancements", null);
+//            Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
+//            for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
+//                if (a.getKey().getKey().startsWith("recipes"))
+//                    continue;
+//                org.bukkit.advancement.AdvancementProgress pro = p.getAdvancementProgress(a);
+//
+//                if (pro.getRemainingCriteria().size() <= 0) {
+//                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
+//                } else if (pro.getAwardedCriteria().size() <= 0) {
+//                    //Do not save if player has no reward crit
+//                } else if (pro.getRemainingCriteria().size() > pro.getAwardedCriteria().size()) {
+//                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
+//                } else {
+//                    config.set(playerUuid + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
+//                }
+//            }
+//        } catch (Error | Exception e4) {
+//        }
 
         try {
             config.save(tempHolder);

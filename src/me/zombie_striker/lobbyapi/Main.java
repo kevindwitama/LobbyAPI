@@ -434,7 +434,7 @@ public class Main extends JavaPlugin implements Listener {
             event.setTo(to);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler()
     private void onTeleport(PlayerPortalEvent event) {
         LobbyWorld curr = LobbyAPI.getLobbyWorld(event.getFrom().getWorld());
         //saveInventory(event.getPlayer(), curr);
@@ -495,7 +495,7 @@ public class Main extends JavaPlugin implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler()
     private void onWorldchange(PlayerChangedWorldEvent event) {
         final Player p = event.getPlayer();
         final LobbyWorld lw = LobbyAPI.getLobbyWorld(p.getWorld());
@@ -511,31 +511,26 @@ public class Main extends JavaPlugin implements Listener {
                     clearInventory(p);
         }
 
-
-        new BukkitRunnable() {
-            public void run() {
-                LobbyWorld lwTo = LobbyAPI.getLobbyWorld(p.getWorld());
-                if (lwFrom == null || (!lwFrom.getInventorySaveName().equals(lwTo.getInventorySaveName()))) {
-                    if (lwTo != null) {
-                        if (enablePWI) {
-                            loadInventory(p, lwTo);
-                        }
-                        if (lwTo.getGameMode() != null && !lwTo.getInventorySaveName().equals(lwFrom.getInventorySaveName()))
-                            p.setGameMode(lwTo.getGameMode());
-
-                        if (lwTo.getSpawnItems() != null && lwTo.getSpawnItems().size() > 0)
-                            for (ItemStack is : lwTo.getSpawnItems())
-                                if (is != null)
-                                    if (!p.getInventory().containsAtLeast(is, 1))
-                                        p.getInventory().addItem(is);
-                    }
-                } else {
-                    p.updateInventory();
+        LobbyWorld lwTo = LobbyAPI.getLobbyWorld(p.getWorld());
+        if (lwFrom == null || (!lwFrom.getInventorySaveName().equals(lwTo.getInventorySaveName()))) {
+            if (lwTo != null) {
+                if (enablePWI) {
+                    loadInventory(p, lwTo);
                 }
+                if (lwTo.getGameMode() != null && !lwTo.getInventorySaveName().equals(lwFrom.getInventorySaveName()))
+                    p.setGameMode(lwTo.getGameMode());
 
-                lastWorld.put(p.getName(), p.getWorld());
+                if (lwTo.getSpawnItems() != null && lwTo.getSpawnItems().size() > 0)
+                    for (ItemStack is : lwTo.getSpawnItems())
+                        if (is != null)
+                            if (!p.getInventory().containsAtLeast(is, 1))
+                                p.getInventory().addItem(is);
             }
-        }.runTaskLater(this, 16);
+        } else {
+            p.updateInventory();
+        }
+
+        lastWorld.put(p.getName(), p.getWorld());
 
     }
 
@@ -703,22 +698,6 @@ public class Main extends JavaPlugin implements Listener {
         p.setFoodLevel(20);
         for (PotionEffect ep : p.getActivePotionEffects())
             p.removePotionEffect(ep.getType());
-    }
-
-    private void loadInventory(Player p, World w) {
-        if (w == null) {
-            getServer().getConsoleSender().sendMessage(
-                    prefix + " The world that " + p.getName() + " is teleporting to is null! Inventories for this world will not be saved.");
-            return;
-        }
-        LobbyWorld lw = LobbyAPI.getLobbyWorld(w);
-        if (lw == null) {
-            getServer().getConsoleSender().sendMessage(prefix + " You have no registered worlds called \"" + w.getName()
-                    + "\"! Inventories for this world will not be loaded.");
-            return;
-        }
-        loadInventory(p, lw);
-
     }
 
     private void loadInventory(Player p, LobbyWorld lw) {

@@ -56,7 +56,7 @@ public class ConfigHandler {
 	}
 
 	public static boolean containsWorldVariable(LobbyWorld lw, ConfigKeys key) {
-		return config.contains("Worlds." + lw.getWorldName() + "." + key);
+		return config.contains("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static boolean containsWorldVariable(String worldname, ConfigKeys key) {
@@ -64,7 +64,7 @@ public class ConfigHandler {
 	}
 
 	public static void setWorldVariable(LobbyWorld lw, ConfigKeys key, Object value) {
-		setWorldVariable(lw.getWorldName(), key, value);
+		setWorldVariable(lw.getWorld().getName(), key, value);
 	}
 
 	public static void setWorldVariable(String lw, ConfigKeys key, Object value) {
@@ -83,19 +83,19 @@ public class ConfigHandler {
 	}
 
 	public static int getWorldVariableInt(LobbyWorld lw, ConfigKeys key) {
-		return config.getInt("Worlds." + lw.getWorldName() + "." + key);
+		return config.getInt("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static double getWorldVariableDouble(LobbyWorld lw, ConfigKeys key) {
-		return config.getDouble("Worlds." + lw.getWorldName() + "." + key);
+		return config.getDouble("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static ItemStack getWorldVariableItemStack(LobbyWorld lw, ConfigKeys key) {
-		return (ItemStack) config.get("Worlds." + lw.getWorldName() + "." + key);
+		return (ItemStack) config.get("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static String getWorldVariableString(LobbyWorld lw, ConfigKeys key) {
-		return getWorldVariableString(lw.getWorldName(), key);
+		return getWorldVariableString(lw.getWorld().getName(), key);
 	}
 
 	public static String getWorldVariableString(String lw, ConfigKeys key) {
@@ -103,19 +103,19 @@ public class ConfigHandler {
 	}
 
 	public static Location getWorldVariableLocation(LobbyWorld lw, ConfigKeys key) {
-		return (Location) config.get("Worlds." + lw.getWorldName() + "." + key);
+		return (Location) config.get("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static List<String> getWorldVariableList(LobbyWorld lw, ConfigKeys key) {
-		return config.getStringList("Worlds." + lw.getWorldName() + "." + key);
+		return config.getStringList("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static Boolean getWorldVariableBoolean(LobbyWorld lw, ConfigKeys key) {
-		return config.getBoolean("Worlds." + lw.getWorldName() + "." + key);
+		return config.getBoolean("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static Object getWorldVariableObject(LobbyWorld lw, ConfigKeys key) {
-		return config.get("Worlds." + lw.getWorldName() + "." + key);
+		return config.get("Worlds." + lw.getWorld().getName() + "." + key);
 	}
 
 	public static Object getWorldVariableObject(String lw, ConfigKeys key) {

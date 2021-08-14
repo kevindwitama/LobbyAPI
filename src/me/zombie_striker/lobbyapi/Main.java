@@ -366,7 +366,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	@EventHandler
-	private void onPlayeJoin(final PlayerJoinEvent event) {
+	private void onPlayerJoin(final PlayerJoinEvent event) {
 		World goingTo = event.getPlayer().getWorld();
 		LobbyAPI.updateServerCount(event.getPlayer());
 		if (LobbyWorld.getMainLobby() != null) {
@@ -457,7 +457,6 @@ public class Main extends JavaPlugin implements Listener {
 
 		if (curr != null && !curr.hasPortal()) {
 			((Cancellable) event).setCancelled(true);
-			Bukkit.broadcastMessage("previous world is null");
 			return null;
 		}
 		if (cause == TeleportCause.END_PORTAL) {
@@ -650,26 +649,12 @@ public class Main extends JavaPlugin implements Listener {
 											}
 											playersOnline.append(((Player) oo[oo.length-1]).getDisplayName());
 										}
-										try {
-											Method method = e.getPlayer().getClass().getMethod("sendTitle",
-													String.class, String.class);
-											if (method != null) {
-												method.invoke(e.getPlayer(),
-														ChatColor.GOLD + "Teleporting to " + (wo.getWorldName()),
-														ChatColor.GRAY + "Players: " + playersOnline.toString());
-											} else {
-												e.getPlayer().sendMessage(
-														ChatColor.GOLD + "Teleporting to " + (wo.getWorldName()));
-												e.getPlayer().sendMessage(
-														ChatColor.GRAY + "Players: " + playersOnline.toString());
-											}
-										} catch (Exception e2) {
-											e.getPlayer().sendMessage(
-													ChatColor.GOLD + "Teleporting to " + (wo.getWorldName()));
-											e.getPlayer().sendMessage(
-													ChatColor.GRAY + "Players: " + playersOnline.toString());
 
-										}
+										e.getPlayer().sendMessage(
+												ChatColor.GOLD + "Teleporting to " + (wo.getWorld().getName()));
+										e.getPlayer().sendMessage(
+												ChatColor.GRAY + "Players: " + playersOnline.toString());
+
 										event.setCancelled(true);
 
 										event.getWhoClicked().closeInventory();

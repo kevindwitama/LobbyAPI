@@ -730,12 +730,12 @@ public class Main extends JavaPlugin implements Listener {
 		FileConfiguration config = getConfig();
 		if (tempHolder.exists())
 			config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-		if (!config.contains(p.getName() + "." + s))
+		if (!config.contains(p.getUniqueId() + "." + s))
 			return;
-		if (config.contains(p.getName() + "." + s + ".i")) {
+		if (config.contains(p.getUniqueId() + "." + s + ".i")) {
 			for (int i = 0; i < p.getInventory().getSize(); i++) {
-				if (config.contains(p.getName() + "." + s + ".i." + i)) {
-					Object item = config.get(p.getName() + "." + s + ".i." + i);
+				if (config.contains(p.getUniqueId() + "." + s + ".i." + i)) {
+					Object item = config.get(p.getUniqueId() + "." + s + ".i." + i);
 					;
 					if (item instanceof ItemStack) {
 						ItemStack temp = (ItemStack) item;
@@ -759,65 +759,65 @@ public class Main extends JavaPlugin implements Listener {
 				}
 			}
 		}
-		p.getInventory().setBoots((ItemStack) config.get(p.getName() + "." + s + ".a." + 1));
-		p.getInventory().setLeggings((ItemStack) config.get(p.getName() + "." + s + ".a." + 2));
-		p.getInventory().setChestplate((ItemStack) config.get(p.getName() + "." + s + ".a." + 3));
-		p.getInventory().setHelmet((ItemStack) config.get(p.getName() + "." + s + ".a." + 4));
+		p.getInventory().setBoots((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 1));
+		p.getInventory().setLeggings((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 2));
+		p.getInventory().setChestplate((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 3));
+		p.getInventory().setHelmet((ItemStack) config.get(p.getUniqueId() + "." + s + ".a." + 4));
 
 		try {
-			if (config.contains(p.getName() + "." + s + ".i.offhand"))
-				p.getInventory().setItemInOffHand(config.getItemStack(p.getName() + "." + s + ".i.offhand"));
+			if (config.contains(p.getUniqueId() + "." + s + ".i.offhand"))
+				p.getInventory().setItemInOffHand(config.getItemStack(p.getUniqueId() + "." + s + ".i.offhand"));
 		} catch (Error | Exception e2) {
 		}
 
-		if (config.contains(p.getName() + "." + s + ".xpl"))
-			p.setLevel((int) config.get(p.getName() + "." + s + ".xpl"));
-		if (config.contains(p.getName() + "." + s + ".xp"))
-			p.setExp((float) (double) config.get(p.getName() + "." + s + ".xp"));
-		if (config.contains(p.getName() + "." + s + ".hunger"))
-			p.setFoodLevel((int) config.get(p.getName() + "." + s + ".hunger"));
+		if (config.contains(p.getUniqueId() + "." + s + ".xpl"))
+			p.setLevel((int) config.get(p.getUniqueId() + "." + s + ".xpl"));
+		if (config.contains(p.getUniqueId() + "." + s + ".xp"))
+			p.setExp((float) (double) config.get(p.getUniqueId() + "." + s + ".xp"));
+		if (config.contains(p.getUniqueId() + "." + s + ".hunger"))
+			p.setFoodLevel((int) config.get(p.getUniqueId() + "." + s + ".hunger"));
 
-		if (config.contains(p.getName() + "." + s + ".potions_effects")) {
-			for (String effect : config.getConfigurationSection(p.getName() + "." + s + ".potions_effects").getKeys(false)) {
+		if (config.contains(p.getUniqueId() + "." + s + ".potions_effects")) {
+			for (String effect : config.getConfigurationSection(p.getUniqueId() + "." + s + ".potions_effects").getKeys(false)) {
 				PotionEffectType type = PotionEffectType.getByName(effect);
-				int duration = config.getInt(p.getName() + "." + s + ".potions_effects." + effect + ".dur");
-				int amplifier = config.getInt(p.getName() + "." + s + ".potions_effects." + effect + ".amp");
+				int duration = config.getInt(p.getUniqueId() + "." + s + ".potions_effects." + effect + ".dur");
+				int amplifier = config.getInt(p.getUniqueId() + "." + s + ".potions_effects." + effect + ".amp");
 				p.addPotionEffect(new PotionEffect(type, duration, amplifier));
 			}
 		}
 
-		if (config.contains(p.getName() + "." + s + ".allowflight"))
-			p.setAllowFlight(config.getBoolean(p.getName() + "." + s + ".allowflight"));
-		if (config.contains(p.getName() + "." + s + ".compasslocation"))
-			p.setCompassTarget((Location) config.get(p.getName() + "." + s + ".compasslocation"));
-		if (config.contains(p.getName() + "." + s + ".fireticks"))
-			p.setFireTicks(config.getInt(p.getName() + "." + s + ".fireticks"));
+		if (config.contains(p.getUniqueId() + "." + s + ".allowflight"))
+			p.setAllowFlight(config.getBoolean(p.getUniqueId() + "." + s + ".allowflight"));
+		if (config.contains(p.getUniqueId() + "." + s + ".compasslocation"))
+			p.setCompassTarget((Location) config.get(p.getUniqueId() + "." + s + ".compasslocation"));
+		if (config.contains(p.getUniqueId() + "." + s + ".fireticks"))
+			p.setFireTicks(config.getInt(p.getUniqueId() + "." + s + ".fireticks"));
 		try {
-			if (config.contains(p.getName() + "." + s + ".bedspawn"))
-				p.setBedSpawnLocation((Location) config.get(p.getName() + "." + s + ".bedspawn"), true);
+			if (config.contains(p.getUniqueId() + "." + s + ".bedspawn"))
+				p.setBedSpawnLocation((Location) config.get(p.getUniqueId() + "." + s + ".bedspawn"), true);
 		} catch (Error | Exception e45) {
 		}
-		if (config.contains(p.getName() + "." + s + ".saturation"))
-			p.setSaturation((float) (double) config.get(p.getName() + "." + s + ".saturation"));
-		if (config.contains(p.getName() + "." + s + ".exhaustion"))
-			p.setExhaustion((float) (double) config.get(p.getName() + "." + s + ".exhaustion"));
-		if (config.contains(p.getName() + "." + s + ".air"))
-			p.setRemainingAir(config.getInt(p.getName() + "." + s + ".air"));
+		if (config.contains(p.getUniqueId() + "." + s + ".saturation"))
+			p.setSaturation((float) (double) config.get(p.getUniqueId() + "." + s + ".saturation"));
+		if (config.contains(p.getUniqueId() + "." + s + ".exhaustion"))
+			p.setExhaustion((float) (double) config.get(p.getUniqueId() + "." + s + ".exhaustion"));
+		if (config.contains(p.getUniqueId() + "." + s + ".air"))
+			p.setRemainingAir(config.getInt(p.getUniqueId() + "." + s + ".air"));
 
 
-		if (config.contains(p.getName() + "." + s + ".advancements")) {
+		if (config.contains(p.getUniqueId() + "." + s + ".advancements")) {
 			try {
 				Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
 				for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
 					if (a.getKey().getKey().startsWith("recipes"))
 						continue;
-					if (config.contains(p.getName() + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
+					if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".won")) {
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : new ArrayList<>(progress.getRemainingCriteria())) {
 							progress.awardCriteria(adv);
 						}
-					} else if (config.contains(p.getName() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
-						Collection<String> awarded = config.getStringList(p.getName() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
+					} else if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded")) {
+						Collection<String> awarded = config.getStringList(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".awarded");
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : a.getCriteria()) {
 							if (awarded.contains(adv)) {
@@ -828,8 +828,8 @@ public class Main extends JavaPlugin implements Listener {
 									progress.revokeCriteria(adv);
 							}
 						}
-					} else if (config.contains(p.getName() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
-						Collection<String> remaining = config.getStringList(p.getName() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
+					} else if (config.contains(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining")) {
+						Collection<String> remaining = config.getStringList(p.getUniqueId() + "." + s + ".advancements." + a.getKey().getKey() + ".remaining");
 						org.bukkit.advancement.AdvancementProgress progress = p.getAdvancementProgress(a);
 						for (String adv : a.getCriteria()) {
 							if (!remaining.contains(adv)) {
@@ -880,7 +880,7 @@ public class Main extends JavaPlugin implements Listener {
 					e1.printStackTrace();
 				}
 			FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-			Location loc = (Location) config.get(p.getName() + "." + lw.getInventorySaveName() + ".LastLocation");
+			Location loc = (Location) config.get(p.getUniqueId() + "." + lw.getInventorySaveName() + ".LastLocation");
 			return loc;
 		}
 		return null;
@@ -919,7 +919,7 @@ public class Main extends JavaPlugin implements Listener {
 					}
 				FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration
 						.loadConfiguration(tempHolder);
-				config.set(p.getName() + "." + lw.getInventorySaveName() + ".LastLocation", newLoc);
+				config.set(p.getUniqueId() + "." + lw.getInventorySaveName() + ".LastLocation", newLoc);
 				try {
 					config.save(tempHolder);
 				} catch (IOException e) {
@@ -950,9 +950,9 @@ public class Main extends JavaPlugin implements Listener {
 			}
 		FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
 
-		config.set(p.getName() + "." + world2 + ".enderchest", null);
+		config.set(p.getUniqueId() + "." + world2 + ".enderchest", null);
 		for (int itemIndex = 0; itemIndex < chest.getSize(); itemIndex++)
-			config.set(p.getName() + "." + world2 + ".enderchest." + itemIndex, chest.getContents()[itemIndex]);
+			config.set(p.getUniqueId() + "." + world2 + ".enderchest." + itemIndex, chest.getContents()[itemIndex]);
 		try {
 			config.save(tempHolder);
 		} catch (IOException e) {
@@ -961,9 +961,6 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	private Inventory getEnderChest(Player p, World w) {
-		if (w == Bukkit.getWorlds().get(0))
-			return p.getEnderChest();
-
 		LobbyWorld lw = LobbyAPI.getLobbyWorld(w.getName());
 		if (lw == null) {
 			p.sendMessage(prefix
@@ -987,7 +984,7 @@ public class Main extends JavaPlugin implements Listener {
 		for (int itemIndex = 0; itemIndex < p.getEnderChest().getSize(); itemIndex++)
 			try {
 				ender.setItem(itemIndex,
-						(ItemStack) config.get(p.getName() + "." + world2 + ".enderchest." + itemIndex));
+						(ItemStack) config.get(p.getUniqueId() + "." + world2 + ".enderchest." + itemIndex));
 			} catch (Error | Exception e4) {
 			}
 		return ender;
@@ -1023,29 +1020,29 @@ public class Main extends JavaPlugin implements Listener {
 				e1.printStackTrace();
 			}
 		FileConfiguration config = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(tempHolder);
-		config.set(p.getName() + "." + world2 + ".xp", p.getExp());
-		config.set(p.getName() + "." + world2 + ".xpl", p.getLevel());
-		config.set(p.getName() + "." + world2 + ".health", p.getHealth());
-		config.set(p.getName() + "." + world2 + ".hunger", p.getFoodLevel());
-		config.set(p.getName() + "." + world2 + ".allowflight", p.getAllowFlight());
-		config.set(p.getName() + "." + world2 + ".compasslocation", p.getCompassTarget());
-		config.set(p.getName() + "." + world2 + ".fireticks", p.getFireTicks());
+		config.set(p.getUniqueId() + "." + world2 + ".xp", p.getExp());
+		config.set(p.getUniqueId() + "." + world2 + ".xpl", p.getLevel());
+		config.set(p.getUniqueId() + "." + world2 + ".health", p.getHealth());
+		config.set(p.getUniqueId() + "." + world2 + ".hunger", p.getFoodLevel());
+		config.set(p.getUniqueId() + "." + world2 + ".allowflight", p.getAllowFlight());
+		config.set(p.getUniqueId() + "." + world2 + ".compasslocation", p.getCompassTarget());
+		config.set(p.getUniqueId() + "." + world2 + ".fireticks", p.getFireTicks());
 		try {
 			try {
-				config.set(p.getName() + "." + world2 + ".bedspawn", p.getBedSpawnLocation());
+				config.set(p.getUniqueId() + "." + world2 + ".bedspawn", p.getBedSpawnLocation());
 			} catch (Error | Exception e4) {
 			}
-			config.set(p.getName() + "." + world2 + ".exhaustion", p.getExhaustion());
-			config.set(p.getName() + "." + world2 + ".saturation", p.getSaturation());
-			config.set(p.getName() + "." + world2 + ".air", p.getRemainingAir());
+			config.set(p.getUniqueId() + "." + world2 + ".exhaustion", p.getExhaustion());
+			config.set(p.getUniqueId() + "." + world2 + ".saturation", p.getSaturation());
+			config.set(p.getUniqueId() + "." + world2 + ".air", p.getRemainingAir());
 		} catch (Error | Exception e4) {
 		}
 		ItemStack[] is = p.getInventory().getContents();
-		config.set(p.getName() + "." + world2 + ".i", null);
+		config.set(p.getUniqueId() + "." + world2 + ".i", null);
 		for (int itemIndex = 0; itemIndex < 36; itemIndex++) {
 			if (is[itemIndex] != null) {
 				if (is[itemIndex].hasItemMeta()) {
-					config.set(p.getName() + "." + world2 + ".i." + itemIndex, is[itemIndex]);
+					config.set(p.getUniqueId() + "." + world2 + ".i." + itemIndex, is[itemIndex]);
 				} else {
 					String saveStuff = "";
 					saveStuff += (is[itemIndex].getType().name());
@@ -1054,7 +1051,7 @@ public class Main extends JavaPlugin implements Listener {
 					} else if (is[itemIndex].getAmount() > 1) {
 						saveStuff += ("," + is[itemIndex].getAmount());
 					}
-					config.set(p.getName() + "." + world2 + ".i." + itemIndex, saveStuff);
+					config.set(p.getUniqueId() + "." + world2 + ".i." + itemIndex, saveStuff);
 				}
 			}
 		}
@@ -1062,26 +1059,26 @@ public class Main extends JavaPlugin implements Listener {
 		try {
 			if (p.getInventory().getItemInOffHand() == null
 					|| p.getInventory().getItemInOffHand().getType() == Material.AIR) {
-				config.set(p.getName() + "." + world2 + ".i.offhand", null);
+				config.set(p.getUniqueId() + "." + world2 + ".i.offhand", null);
 			} else {
-				config.set(p.getName() + "." + world2 + ".i.offhand", p.getInventory().getItemInOffHand());
+				config.set(p.getUniqueId() + "." + world2 + ".i.offhand", p.getInventory().getItemInOffHand());
 			}
 		} catch (Error | Exception e2) {
 		}
 
-		config.set(p.getName() + "." + world2 + ".a." + 1, p.getInventory().getBoots());
-		config.set(p.getName() + "." + world2 + ".a." + 2, p.getInventory().getLeggings());
-		config.set(p.getName() + "." + world2 + ".a." + 3, p.getInventory().getChestplate());
-		config.set(p.getName() + "." + world2 + ".a." + 4, p.getInventory().getHelmet());
+		config.set(p.getUniqueId() + "." + world2 + ".a." + 1, p.getInventory().getBoots());
+		config.set(p.getUniqueId() + "." + world2 + ".a." + 2, p.getInventory().getLeggings());
+		config.set(p.getUniqueId() + "." + world2 + ".a." + 3, p.getInventory().getChestplate());
+		config.set(p.getUniqueId() + "." + world2 + ".a." + 4, p.getInventory().getHelmet());
 
-		config.set(p.getName() + "." + world2 + ".potions_effects", null);
+		config.set(p.getUniqueId() + "." + world2 + ".potions_effects", null);
 		for (PotionEffect eff : p.getActivePotionEffects()) {
-			config.set(p.getName() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".dur", eff.getDuration());
-			config.set(p.getName() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".amo", eff.getAmplifier());
+			config.set(p.getUniqueId() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".dur", eff.getDuration());
+			config.set(p.getUniqueId() + "." + world2 + ".potions_effects." + eff.getType().getName() + ".amo", eff.getAmplifier());
 		}
 
 		try {
-			config.set(p.getName() + "." + world2 + ".advancements", null);
+			config.set(p.getUniqueId() + "." + world2 + ".advancements", null);
 			Iterator<org.bukkit.advancement.Advancement> it = Bukkit.advancementIterator();
 			for (org.bukkit.advancement.Advancement a = it.next(); it.hasNext(); a = it.next()) {
 				if (a.getKey().getKey().startsWith("recipes"))
@@ -1089,13 +1086,13 @@ public class Main extends JavaPlugin implements Listener {
 				org.bukkit.advancement.AdvancementProgress pro = p.getAdvancementProgress(a);
 
 				if (pro.getRemainingCriteria().size() <= 0) {
-					config.set(p.getName() + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
+					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".won", "");
 				} else if (pro.getAwardedCriteria().size() <= 0) {
 					//Do not save if player has no reward crit
 				} else if (pro.getRemainingCriteria().size() > pro.getAwardedCriteria().size()) {
-					config.set(p.getName() + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
+					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".awarded", new ArrayList<String>(pro.getAwardedCriteria()));
 				} else {
-					config.set(p.getName() + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
+					config.set(p.getUniqueId() + "." + world2 + ".advancements." + a.getKey().getKey() + ".remaining", new ArrayList<String>(pro.getRemainingCriteria()));
 				}
 			}
 		} catch (Error | Exception e4) {

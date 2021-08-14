@@ -235,14 +235,6 @@ public class Main extends JavaPlugin implements Listener {
 			saveConfig();
 		}
 
-		// @SuppressWarnings("unused")
-		// final Updater updater = new Updater(this, 91206, true);
-		//GithubUpdater.autoUpdate(this, "ZombieStriker", "LobbyAPI", "LobbyAPI.jar");
-		SpiGetUpdater.checkAutoUpdate(this, 17659, getConfig().getBoolean("auto-update") == true);
-
-		@SuppressWarnings("unused")
-		Metrics met = new Metrics(this);
-
 		if (!getConfig().contains("Version")
 				|| !getConfig().getString("Version").equals(this.getDescription().getVersion())) {
 			getConfig().set("Version", this.getDescription().getVersion());
